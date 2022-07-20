@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" >
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="https://cdn.bootcss.com/stomp.js/2.3.3/stomp.js"></script>
+
+</head>
+
+<body>
+<script>
+
+    var url="ws://192.168.56.10:61617/stomp";
+    var login="admin";
+    var passcode="admin";
+
+    var destination="/topic/test1";
+    client=Stomp.client(url);
+    var onconnect=function(frame){
+        client.subscribe(destination, function(message) {
+
+            console.log(message.body);
+
+            alert(message.body);
+
+            // if (message.body) {
+            //     alert("got message with body " + message.body)
+            //     } else {
+            //     alert("got empty message");
+            //     }
+
+        });
+    }
+
+    client.connect(login, passcode, onconnect);
+
+</script>
+<!--/*@thymesVar id="msg" type="java.lang.String"*/-->
+<div th:switch="${msg}">
+    <p th:case="null" th:text="为空"></p>
+    <p th:case="*" th:text="${msg}"></p>
+</div>
+    
+</div>
+</body>
+</html>
